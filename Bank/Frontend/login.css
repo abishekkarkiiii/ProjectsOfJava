@@ -1,0 +1,129 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #0077b6, #023e8a);
+}
+
+.login-background {
+    background: transparent;
+    position: relative;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    animation: fadeIn 1s ease-in-out, moveIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes moveIn {
+    from {
+        transform: translateY(50px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.card-title {
+    margin-bottom: 30px;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.form-control {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: background 0.3s, color 0.3s;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.2);
+    color: #000000;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-primary {
+    background-color: #0077b6;
+    border-color: #0077b6;
+    transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #023e8a;
+    border-color: #023e8a;
+    transform: scale(1.05);
+}
+
+.logo-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3); /* Increased opacity for better visibility */
+    pointer-events: none;
+    user-select: none;
+}
+/* Add CSS for the "Create Account" button */
+/* Add CSS for the "Create Account" button */
+.create-account-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.create-account-btn a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0077b6;
+    color: #ffffff;
+    text-decoration: none;
+    border: 1px solid #0077b6;
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.create-account-btn a:hover {
+    background-color: #023e8a;
+    border-color: #023e8a;
+    transform: scale(1.05);
+}
+
+/* Responsive button styles */
+@media screen and (max-width: 576px) {
+    .create-account-btn a {
+        padding: 8px 16px; /* Adjust padding for smaller screens */
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+}
