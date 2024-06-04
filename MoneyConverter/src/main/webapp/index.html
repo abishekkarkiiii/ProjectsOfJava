@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <style>
+        @keyframes backgroundChange {
+            0% { background-image: url('nepal.jpg'); }
+            33% { background-image: url('us.jpg'); }
+            66% { background-image: url('indian.jpg'); }
+            100% { background-image: url('nepal.jpg'); }
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            animation: backgroundChange 15s infinite;
+            background-size: cover;
+            background-position: center;
+        }
+
+        header {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: red;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .converter-app {
+            background-color: rgb(136 170 213 / 90%);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .converter-app h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+            animation: slideIn 1s ease-out;
+        }
+
+        .converter-app input, .converter-app select, .converter-app button {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: transform 0.3s;
+        }
+
+        .converter-app input:focus, .converter-app select:focus {
+            outline: none;
+            border-color: #00bfff;
+            box-shadow: 0 0 5px rgba(0, 191, 255, 0.5);
+        }
+
+        .converter-app button {
+            background-color: #00bfff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .converter-app button:hover {
+            background-color: #0041cc;
+            transform: translateY(-2px);
+        }
+
+        .converter-app button:active {
+            background-color: #005f99;
+            transform: translateY(0);
+        }
+
+        #response {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>ABISHEK</header>
+    
+    <div class="converter-app">
+        <h2>Converter</h2>
+        <input type="number" id="amount" placeholder="Enter amount">
+        <select id="fromCurrency">
+            <option value="USD">USD</option>
+            <option value="INR">INR</option>
+            <option value="NPR">NPR</option>
+            <!-- Add more currencies as needed -->
+        </select>
+        <select id="toCurrency">
+            <option value="USD">USD</option>
+            <option value="INR">INR</option>
+            <option value="NPR">NPR</option>
+            <!-- Add more currencies as needed -->
+        </select>
+        <button onclick="convertCurrency()">Convert</button>
+        <p id="response">Converted amount will be displayed here</p>
+    </div>
+    
+    <script>
+        function convertCurrency() {
+            let amount = document.getElementById('amount').value;
+            let fromCurrency = document.getElementById('fromCurrency').value;
+            let toCurrency = document.getElementById('toCurrency').value;
+            const data = { amount: amount, fromCurrency: fromCurrency, toCurrency: toCurrency };
+
+            fetch('backend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').textContent = data.message + ": " + data.convertedAmount;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
