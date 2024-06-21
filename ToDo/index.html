@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enhanced Layout with Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            max-width: 900px;
+            margin: 30px auto;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .top-section,
+        .update-section {
+            margin-bottom: 20px;
+        }
+
+        .name,
+        .email,
+        .todo,
+        .update-section,
+        .add-section {
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .picture {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #424242;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .picture:hover {
+            transform: scale(1.05);
+        }
+
+        .picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #a0a0a0;
+        }
+
+        p,
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #424242;
+            border-radius: 5px;
+            background: #333;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .todo-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2c2c2c;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .todo-list li span {
+            flex-grow: 1;
+            margin-right: 10px;
+            color: #e0e0e0;
+        }
+
+        .todo-list li button {
+            background: #ff5252;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .todo-list li button:hover {
+            background: #ff7171;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #ff5252;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            align-self: center;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            background: #ff7171;
+        }
+
+        button i {
+            margin-right: 5px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .picture {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="top-section">
+                    <h2>Abishek</h2>
+                    <div class="email">
+                        <label>Name:</label>
+                        <p id="name">John Doe</p>
+                        <hr />
+                        <label>Email:</label>
+                        <p id="email">john.doe@example.com</p>
+                    </div>
+                </div>
+
+                <div class="add-section">
+                    <label>Add a Task</label>
+                    <textarea id="new-task" placeholder="Enter your new task here..."></textarea>
+                    <button onclick="addTask()"><i class="fas fa-plus"></i> Add Task</button>
+                    <br />
+                    <hr />
+
+                    <label>To-Do List</label>
+                    <ul id="todo-list" class="todo-list"></ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="right picture">
+                    <img src="https://via.placeholder.com/150" alt="Profile Picture" id="profile-pic" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-8">
+                <div class="update-section">
+                    <div class="update-form">
+                        <label for="update-email">Update Email:</label>
+                        <input type="email" id="update-email" placeholder="Enter new email" />
+                        <br />
+                        <label for="update-name">Update Name:</label>
+                        <input type="text" id="update-name" placeholder="Enter a Name" />
+                        <br />
+                        <hr />
+                        <label for="update-picture">Update Picture:</label>
+                        <input type="file" id="update" accept="image/*" />
+                    </div>
+                    <button onclick="upload()"><i class="fas fa-upload"></i> Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let getobj = { get: "GET" };
+        fetch("backend", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(getobj),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                document.getElementById("name").innerText = data.name;
+                document.getElementById("email").innerText = data.email;
+                document.getElementById("profile-pic").src = data.prefix + "," + data.image;
+            });
+
+        function upload() {
+            let imgdata = document.getElementById("update").files[0];
+            if (imgdata) {
+                let filereader = new FileReader();
+                filereader.readAsDataURL(imgdata);
+                filereader.onload = (e) => {
+                    let obj = {
+                        name: document.getElementById("update-name").value,
+                        email: document.getElementById("update-email").value,
+                        img: e.target.result,
+                    };
+                    fetch("upload", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(obj),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            document.getElementById("name").innerText = data.name;
+                            document.getElementById("email").innerText = data.email;
+                            document.getElementById("profile-pic").src = data.image;
+                        });
+                };
+            } else {
+                alert("Image not selected");
+            }
+        }
+
+        function addTask() {
+            let newTask = document.getElementById("new-task").value;
+            if (newTask.trim() === "") return;
+
+            let obj = { data: newTask };
+            fetch("add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(obj),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    display();
+                });
+        }
+
+        function deleteTask(taskId) {
+            let obj = {
+                del: taskId
+            };
+            fetch('delete', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            }).then(response => response.json())
+                .then(data => {
+                    display();
+                });
+        }
+
+        function display() {
+            let getobj = { get: "GET" };
+            fetch("display", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(getobj),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    let todoList = document.getElementById("todo-list");
+                    todoList.innerHTML = ''; // Clear the current list
+
+                    let tasks = JSON.parse(data.data);
+                    let ids = JSON.parse(data.id);
+
+                    tasks.forEach((task, index) => {
+                        let listItem = document.createElement("li");
+                        listItem.innerHTML = `
+              <span>${task}</span>
+              <button onclick="deleteTask('${ids[index]}')" value="${ids[index]}"><i class="fas fa-trash-alt"></i></button>
+            `;
+                        todoList.appendChild(listItem);
+                    });
+
+                    document.getElementById("new-task").value = "";
+                });
+        }
+
+        // Initial display call to populate the list on page load
+        display();
+    </script>
+</body>
+
+</html>
