@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #8360c3, #2ebf91);
+            margin: 0;
+            padding: 0;
+        }
+        #chat-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            max-width: 1200px;
+            margin: 50px auto;
+            background-color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+        #sidebar {
+            background: linear-gradient(45deg, #1d1e22, #4a4a52);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-100%);
+        }
+        #sidebar.show {
+            transform: translateX(0);
+        }
+        #sidebar h4 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #sidebar .contact {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #6c757d;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        #sidebar .contact:hover {
+            background-color: #5a6268;
+        }
+        #sidebar #logoutButton {
+            padding: 10px 15px;
+            margin-top: 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+        #sidebar #logoutButton:hover {
+            background-color: #c82333;
+        }
+        #chat {
+            display: flex;
+            flex-direction: column;
+            background-color: #f7f7f7;
+        }
+        #messageArea {
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ddd;
+            flex-grow: 1;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff7f7;
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+        .message::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: -10px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent transparent transparent #fff7f7;
+        }
+        #messageForm {
+            display: flex;
+            padding: 10px;
+            background-color: #ffffff;
+            border-top: 1px solid #ddd;
+        }
+        #messageForm input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            margin-right: 10px;
+            transition: border-color 0.3s ease;
+        }
+        #messageForm input:focus {
+            border-color: #007bff;
+        }
+        #messageForm button {
+            padding: 12px 25px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #messageForm button:hover {
+            background-color: #0056b3;
+        }
+        #toggleSidebarButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        #toggleSidebarButton:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 768px) {
+            #chat-container {
+                grid-template-columns: 1fr;
+            }
+            #sidebar {
+                position: absolute;
+                height: 100%;
+                z-index: 100;
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        .message img {
+            max-width: 100%;
+            max-height: 300px; /* Adjust as needed */
+            object-fit: contain; /* Ensures the image fits within the container without distortion */
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<button id="toggleSidebarButton">☰</button>
+<div id="chat-container">
+    <div id="sidebar">
+        <h4>Contacts</h4>
+        <div class="contact" id="friendRequest">Add Friend</div>
+        <div class="contact">Contact 2</div>
+        <div class="contact">Contact 3</div>
+        <!-- Add more contacts as needed -->
+        <button id="logoutButton">Logout</button>
+    </div>
+    <div id="chat">
+        <div id="messageArea"></div>
+        <form id="messageForm" enctype="multipart/form-data">
+            <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+            <button type="button" id="uploadButton" class="btn btn-secondary">Image</button>
+            <input type="text" id="message" placeholder="Type a message..." class="form-control"/>
+            <button type="submit" id="sendButton" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    var stompClient = null;
+    var messageArea = document.querySelector('#messageArea');
+    var messageForm = document.querySelector('#messageForm');
+    var messageInput = document.getElementById('message');
+    var imageInput = document.getElementById('imageUpload');
+    var uploadButton = document.getElementById('uploadButton');
+    var currentid;
+
+    function connect() {
+        // Fetch and store the current ID
+        fetch('/app')
+            .then(response => response.json())
+            .then(data => {
+                currentid = data.messageId;
+                if (!localStorage.getItem('currentId')) {
+                    localStorage.setItem('currentId', currentid);
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+        // Fetch and display past messages
+        fetch('/app/allmessage')
+            .then(response => response.json())
+            .then(messages => {
+                messages.forEach(message => {
+                    showMessage(message);
+                });
+            })
+            .catch(error => console.error('Error fetching messages:', error));
+
+        // Setup WebSocket connection
+        var socket = new SockJS('/chat-websocket');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/chat/chat', function(chatMessage) {
+                showMessage(JSON.parse(chatMessage.body));
+            });
+        });
+    }
+
+    function showMessage(message) {
+        var messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+
+        if (message.content.startsWith('data:image/')) {
+            var img = document.createElement('img');
+            img.src = message.content;
+            messageElement.appendChild(img);
+        } else {
+            var text = document.createTextNode(message.sender + ": " + message.content);
+            messageElement.appendChild(text);
+        }
+
+        messageArea.appendChild(messageElement);
+        messageArea.scrollTop = messageArea.scrollHeight;
+    }
+
+    messageForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var messageContent = messageInput.value.trim();
+        var selectedImage = imageInput.files[0];
+
+        if (messageContent || selectedImage) {
+            var formData = new FormData();
+            formData.append('messageId', localStorage.getItem('currentId'));
+            formData.append('content', messageContent);
+            if (selectedImage) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var imgBase64 = e.target.result;
+                    var Message = {
+                        content: imgBase64,
+                        messageId: localStorage.getItem('currentId')
+                    };
+                    stompClient.send("/chat/file", {}, JSON.stringify(Message));
+                    messageInput.value = '';
+                    imageInput.value = '';
+                };
+                reader.readAsDataURL(selectedImage);
+            } else {
+                var Message = {
+                    content: messageContent,
+                    messageId: localStorage.getItem('currentId')
+                };
+                stompClient.send("/chat/app", {}, JSON.stringify(Message));
+                messageInput.value = '';
+            }
+        }
+    });
+
+    uploadButton.addEventListener('click', function() {
+        imageInput.click();
+    });
+
+    document.getElementById('toggleSidebarButton').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('show');
+    });
+
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        localStorage.removeItem('currentId');
+        window.location.href = '/logout'
+        alert('Logged out!');
+    });
+    document.getElementById('friendRequest').addEventListener('click', function() {
+        window.location.href = '/friendRequest.html'
+       
+    });
+
+    connect();
+</script>
+</body>
+</html>

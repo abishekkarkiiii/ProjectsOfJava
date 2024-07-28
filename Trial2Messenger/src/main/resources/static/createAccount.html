@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        font-family: "Arial", sans-serif;
+      }
+      .create-account-container {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 100%;
+      }
+      .create-account-container h2 {
+        margin-bottom: 30px;
+        font-weight: bold;
+        color: #6a11cb;
+        text-align: center;
+      }
+      .create-account-container .form-control {
+        border: 1px solid #ddd;
+        padding: 10px 15px;
+        border-radius: 5px;
+      }
+      .input-group {
+        position: relative;
+      }
+      .input-group .form-control {
+        padding-right: 50px;
+      }
+      .input-group-append {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #6a11cb;
+      }
+      .input-group-append:hover {
+        color: #5a0bb5;
+      }
+      .btn-primary {
+        background-color: #6a11cb;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        transition: background-color 0.3s;
+      }
+      .btn-primary:hover {
+        background-color: #5a0bb5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="create-account-container">
+      <h2>Create Account</h2>
+      <form>
+        <label for="username">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          required
+        />
+
+        <label for="password">Password</label>
+        <div class="input-group">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+          />
+          <div class="input-group-append" id="toggle-password">
+            <i class="fas fa-eye"></i>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block mt-3" onclick="create()">
+          Create Account
+        </button>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+      function create() {
+        let obj = {
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value,
+        };
+        event.preventDefault();
+        fetch("/messenger/create", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(obj),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data != null) {
+                console.log(data.username)
+                window.location.href="login.html"
+              console.log("account created sucessfully");
+            } else alert("sorry can't created account");
+          });
+      }
+    </script>
+  </body>
+</html>
