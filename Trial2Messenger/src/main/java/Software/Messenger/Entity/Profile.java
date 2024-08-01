@@ -17,5 +17,8 @@ public class Profile {
     private ObjectId id;
     private String  userId;
     private List<String> RequestList=new ArrayList<>();
+    private List<String> FriendList=new ArrayList<>();
+    private List <String> Friendcode=new ArrayList<>();
+
 
 }

@@ -24,7 +24,7 @@ public class SecurityConfig {
                         .loginPage("/login.html")
                         .loginProcessingUrl("/login")
                         .successHandler((request, response, authentication) -> {
-                            response.sendRedirect("index.html");
+                            response.sendRedirect("FriendRequest.html");//temprorary
                             response.setStatus(200);
                         })
                         .failureHandler((request, response, exception) -> {

@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public interface MessageRepo extends MongoRepository <Message, ObjectId>{
-    //To save a message
+    List<Message> findByfriendcode(String friendcode);
 
 }

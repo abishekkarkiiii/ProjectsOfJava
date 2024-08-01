@@ -9,4 +9,5 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 public class MessageDetails {
     private String content;
+    private  String friendcode;
 }

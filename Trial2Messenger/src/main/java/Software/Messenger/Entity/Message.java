@@ -12,4 +12,6 @@ public class Message {
     private String content;
     private String sender;
     private String messageId;
+    private String address;
+    private String friendcode;
 }

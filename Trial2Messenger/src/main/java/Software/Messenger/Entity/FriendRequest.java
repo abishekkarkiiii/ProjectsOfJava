@@ -10,5 +10,4 @@ public class FriendRequest {
    private String userprofileId;//paune(receiver)
    private String userId;//pathaune(sender)
 
-
 }

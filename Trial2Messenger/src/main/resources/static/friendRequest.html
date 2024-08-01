@@ -1,272 +1,492 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HamroBazar - Home</title>
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
     <style>
-      body {
-        font-family: "Arial", sans-serif;
-        background: linear-gradient(to right, #8360c3, #2ebf91);
-        margin: 0;
-        padding: 0;
-      }
-      #home-container {
-        display: grid;
-        grid-template-columns: 300px 1fr;
-        max-width: 1200px;
-        margin: 50px auto;
-        background-color: #fff;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        border-radius: 12px;
-        overflow: hidden;
-        animation: fadeIn 1s ease-in-out;
-      }
-      #sidebar {
-        background: linear-gradient(45deg, #1d1e22, #4a4a52);
-        color: white;
-        padding: 20px;
-        overflow-y: auto;
-        transition: transform 0.3s ease-in-out;
-        transform: translateX(-100%);
-      }
-      #sidebar.show {
-        transform: translateX(0);
-      }
-      #sidebar h4 {
-        margin-bottom: 20px;
-        text-align: center;
-      }
-      #sidebar .contact {
-        padding: 15px;
-        margin-bottom: 10px;
-        background-color: #6c757d;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background 0.3s ease;
-      }
-      #sidebar .contact:hover {
-        background-color: #5a6268;
-      }
-      #sidebar #logoutButton {
-        padding: 10px 15px;
-        margin-top: 20px;
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        width: 100%;
-        text-align: center;
-      }
-      #sidebar #logoutButton:hover {
-        background-color: #c82333;
-      }
-      #main-content {
-        display: flex;
-        flex-direction: column;
-        background-color: #f7f7f7;
-        padding: 20px;
-      }
-      .user-card {
-        display: flex;
-        align-items: center;
-        padding: 15px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
-      }
-      .user-card img {
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        margin-right: 15px;
-      }
-      .user-card .user-info {
-        flex-grow: 1;
-      }
-      .user-card .add-friend-btn {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      .user-card .add-friend-btn:hover {
-        background-color: #0056b3;
-      }
-      #toggleSidebarButton {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        padding: 10px 15px;
-        border: none;
-        background-color: #007bff;
-        color: white;
-        border-radius: 6px;
-        cursor: pointer;
-        z-index: 1000;
-        transition: background-color 0.3s ease;
-      }
-      #toggleSidebarButton:hover {
-        background-color: #0056b3;
-      }
-      @media (max-width: 768px) {
+        /* Existing styles */
+        body {
+            font-family: "Arial", sans-serif;
+            background: linear-gradient(to right, #8360c3, #2ebf91);
+            margin: 0;
+            padding: 0;
+        }
+
         #home-container {
-          grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            max-width: 1200px;
+            margin: 50px auto;
+            background-color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
         }
+
         #sidebar {
-          position: absolute;
-          height: 100%;
-          z-index: 100;
+            background: linear-gradient(45deg, #1d1e22, #4a4a52);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-100%);
         }
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
+
+        #sidebar.show {
+            transform: translateX(0);
         }
-        to {
-          opacity: 1;
+
+        #sidebar h4 {
+            margin-bottom: 20px;
+            text-align: center;
         }
-      }
+
+        #sidebar .contact {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #6c757d;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        #sidebar .contact:hover {
+            background-color: #5a6268;
+        }
+
+        #sidebar .contact i {
+            margin-right: 10px;
+        }
+
+        #sidebar #logoutButton {
+            padding: 10px 15px;
+            margin-top: 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        #sidebar #logoutButton:hover {
+            background-color: #c82333;
+        }
+
+        #main-content {
+            display: flex;
+            flex-direction: column;
+            background-color: #f7f7f7;
+            padding: 20px;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .user-card img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .user-card .user-info {
+            flex-grow: 1;
+        }
+
+        .user-card .add-friend-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .user-card .add-friend-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #toggleSidebarButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        #toggleSidebarButton:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            #home-container {
+                grid-template-columns: 1fr;
+            }
+
+            #sidebar {
+                position: absolute;
+                height: 100%;
+                z-index: 100;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .styled-hr {
+            border: none;
+            border-top: 2px solid #333;
+            margin: 20px 0;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      let stompClient = null;
+    document.addEventListener("DOMContentLoaded", function () {
+    // Fetch initial data and store in local storage
+    fetch('/app')
+        .then(response => response.json())
+        .then(data => {
+            let currentid = data.messageId;
+            if (!localStorage.getItem('currentId')) {
+                localStorage.setItem('currentId', currentid);
+            }
 
-      function connect() {
+            let FriendRequest = {
+                userId: localStorage.getItem("currentId"),
+            };
+
+            fetch("/profile/getcurrentprofile", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(FriendRequest),
+            })
+                .then(response => response.text())
+                .then(data => {
+                    localStorage.setItem("currentprofileId", data);
+                    // After setting the profile ID, perform subsequent operations
+                    initializeApp();
+                })
+                .catch(error => console.error('Error fetching current profile:', error));
+        })
+        .catch(error => console.error('Error fetching initial data:', error));
+
+    function initializeApp() {
+        connect();
+        FetchFriendRequest();
+        document.getElementById("toggleSidebarButton").addEventListener("click", function () {
+            document.getElementById("sidebar").classList.toggle("show");
+        });
+
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            localStorage.removeItem("currentId");
+            localStorage.removeItem("currentprofileId");
+            window.location.href = "/logout";
+            Swal.fire('Logged out!', 'You have been logged out successfully.', 'success');
+        });
+
+        fetch("/profile", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId: localStorage.getItem("currentId") }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                const mainContent = document.getElementById("user-list");
+                data.forEach(user => {
+                    const currentProfileId = localStorage.getItem("currentprofileId");
+                    if (user.userId === currentProfileId) {
+                        fetchOldRequest(user.requestList);
+                        return;
+                    }
+
+                    const userCard = createUserCard(user);
+                    mainContent.appendChild(userCard);
+                });
+            })
+            .catch(error => console.error("Error fetching profiles:", error));
+
+        document.getElementById("chat").addEventListener("click", function () {
+            window.location.href = "/index.html";
+        });
+
+        FetchFriendRequest();
+    }
+
+    function connect() {
         const socket = new SockJS("/chat-websocket");
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
-          console.log("Connected: " + frame);
+            console.log("Connected: " + frame);
 
-          stompClient.subscribe(
-            `/chat/${localStorage.getItem("currentprofileId")}`,
-            function (message) {
-              alert(
-                "Friend request sent by " + JSON.parse(message.body).username
-              );
-            }
-          );
+            stompClient.subscribe(`/chat/${localStorage.getItem("currentprofileId")}`, function (message) {
+                const profile = JSON.parse(message.body);
+                displayFriendRequest(profile);
+            });
         });
-      }
+    }
 
-      function addFriend(x) {
+    function addFriend(userId) {
         let FriendRequest = {
-          userprofileId: x,
-          userId: localStorage.getItem("currentprofileId"),
+            userprofileId: userId,
+            userId: localStorage.getItem("currentprofileId"),
         };
         stompClient.send(
-          "/chat/profile/add_friend",
-          {},
-          JSON.stringify(FriendRequest)
+            "/chat/profile/add_friend",
+            {},
+            JSON.stringify(FriendRequest)
         );
-      }
+    }
 
-      document.addEventListener("DOMContentLoaded", function () {
-        document
-          .getElementById("toggleSidebarButton")
-          .addEventListener("click", function () {
-            document.getElementById("sidebar").classList.toggle("show");
-          });
+    function displayFriendRequest(profile) {
+        const friendRequestsContainer = document.getElementById("friend-requests");
 
-        document
-          .getElementById("logoutButton")
-          .addEventListener("click", function () {
-            localStorage.removeItem("currentId");
-            window.location.href = "/logout";
-            alert("Logged out!");
-          });
-        let FriendRequest = {
-          userId: localStorage.getItem("currentId"),
-        };
-        fetch("/profile/getcurrentprofile", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(FriendRequest),
-        })
-          .then((response) => response.text())
-          .then((data) => {
-            console.log(data);
-            localStorage.setItem("currentprofileId", data);
-          });
-        fetch("/profile", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(FriendRequest),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            connect();
-            console.log(data);
-            const mainContent = document.getElementById("main-content");
-            data.forEach((user) => {
-              const currentProfileId = localStorage.getItem("currentprofileId");
-              if (user.userId === currentProfileId) {
-                return;
-              }
+        if (!profile.username) {
+            console.error("Profile does not have a username:", profile);
+            return;
+        }
 
-              const userCard = document.createElement("div");
-              userCard.className = "user-card";
+        const existingCard = document.querySelector(`.user-card[data-user-id="${profile.userId}"]`);
+        if (existingCard) {
+            return;
+        }
+        console.log(profile)
+        const userCard = document.createElement("div");
+        userCard.className = "user-card";
+        userCard.dataset.userId = profile.userId;
 
-              const userImg = document.createElement("img");
-              userImg.src = "./Photos/Picsart_24-01-06_18-23-01-417.png"; // Placeholder image, replace as needed
-              userImg.alt = "User Avatar";
+        const userImg = document.createElement("img");
+        userImg.src = "./Photos/Picsart_24-01-06_18-23-01-417.png";
+        userImg.alt = "User Avatar";
 
-              const userInfo = document.createElement("div");
-              userInfo.className = "user-info";
+        const userInfo = document.createElement("div");
+        userInfo.className = "user-info";
 
-              const userName = document.createElement("h5");
-              userName.textContent = user.username; // Assuming 'username' is the property name
+        const userName = document.createElement("h5");
+        userName.textContent = profile.username;
 
-              const addFriendButton = document.createElement("button");
-              addFriendButton.className = "add-friend-btn";
-              addFriendButton.textContent = "Add Friend";
-              addFriendButton.onclick = () => addFriend(user.userId);
-
-              userInfo.appendChild(userName);
-              userCard.appendChild(userImg);
-              userCard.appendChild(userInfo);
-              userCard.appendChild(addFriendButton);
-
-              mainContent.appendChild(userCard);
+        const addFriendButton = document.createElement("button");
+        addFriendButton.className = "add-friend-btn";
+        addFriendButton.textContent = "Accept";
+        addFriendButton.onclick = () => {
+            Swal.fire({
+                title: 'Accept Friend Request?',
+                text: `Do you want to accept the friend request from ${profile.username}?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#dc3545',
+                confirmButtonText: 'Yes, accept it!',
+                cancelButtonText: 'No, cancel'
+            }).then((result) => {
+                let FriendRequest = {
+                    userprofileId:localStorage.getItem('currentprofileId'),//paune(receiver)
+                    userId:profile.userId//pathaune(sender)
+                }
+                if (result.isConfirmed) {
+                    fetch('/profile/accept', {
+                        method: 'post',
+                        headers: {
+                            "Content-Type": 'application/json'
+                        },
+                        body: JSON.stringify(FriendRequest)
+                    })
+                    .then(() => FetchFriendRequest());
+                    Swal.fire('Accepted!', 'Friend request has been accepted.', 'success');
+                }
             });
-          })
-          .catch((error) => console.error("Error fetching profiles:", error));
+        };
 
-        document.getElementById("chat").addEventListener("click", function () {
-          window.location.href = "/index.html";
-        });
-      });
+        userInfo.appendChild(userName);
+        userCard.appendChild(userImg);
+        userCard.appendChild(userInfo);
+        userCard.appendChild(addFriendButton);
+
+        friendRequestsContainer.appendChild(userCard);
+    }
+
+    function createUserCard(user) {
+        const userCard = document.createElement("div");
+        userCard.className = "user-card";
+
+        const userImg = document.createElement("img");
+        userImg.src = "./Photos/Picsart_24-01-06_18-23-01-417.png";
+        userImg.alt = "User Avatar";
+
+        const userInfo = document.createElement("div");
+        userInfo.className = "user-info";
+
+        const userName = document.createElement("h5");
+        userName.textContent = user.username;
+
+        const addFriendButton = document.createElement("button");
+        addFriendButton.className = "add-friend-btn";
+        addFriendButton.textContent = "Add Friend";
+        addFriendButton.onclick = () => addFriend(user.userId);
+
+        userInfo.appendChild(userName);
+        userCard.appendChild(userImg);
+        userCard.appendChild(userInfo);
+        userCard.appendChild(addFriendButton);
+
+        return userCard;
+    }
+
+    function fetchOldRequest(requestList) {
+        fetch("profile/getFriendRequest", {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestList)
+        })
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(profile => {
+                    displayFriendRequest(profile);
+                });
+            })
+            .catch(error => console.error("Error fetching old requests:", error));
+    }
+
+    function FetchFriendRequest() {
+        let ResponseRequest = {
+            userId: localStorage.getItem('currentprofileId')
+        };
+        fetch("profile/friendlist", {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ResponseRequest)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                data.forEach(profile => {
+                    displayFriendList(profile);
+                });
+            })
+            .catch(error => console.error("Error fetching friend list:", error));
+    }
+
+    function displayFriendList(profile) {
+        const friendListContainer = document.getElementById("friend-list");
+
+        if (!profile.username) {
+            console.error("Profile does not have a username:", profile);
+            return;
+        }
+
+        const existingCard = document.querySelector(`.user-card[data-user-id="${profile.userId}"]`);
+        if (existingCard) {
+            return;
+        }
+        console.log(profile)
+        const userCard = document.createElement("div");
+        userCard.className = "user-card";
+        userCard.dataset.userId = profile.userId;
+
+        const userImg = document.createElement("img");
+        userImg.src = "./Photos/Picsart_24-01-06_18-23-01-417.png";
+        userImg.alt = "User Avatar";
+
+        const userInfo = document.createElement("div");
+        userInfo.className = "user-info";
+
+        const userName = document.createElement("h5");
+        userName.textContent = profile.username;
+
+        const chatButton = document.createElement("button");
+        chatButton.className = "add-friend-btn";
+        chatButton.textContent = "Chat";
+        chatButton.onclick = () => {
+            localStorage.setItem('temp', profile.userId);
+            window.location.href = "/index.html";
+        };
+
+        userInfo.appendChild(userName);
+        userCard.appendChild(userImg);
+        userCard.appendChild(userInfo);
+        userCard.appendChild(chatButton);
+
+        friendListContainer.appendChild(userCard);
+    }
+
+});
+ 
+
     </script>
-  </head>
-  <body>
-    <button id="toggleSidebarButton">☰</button>
+</head>
+
+<body>
+    <button id="toggleSidebarButton"><i class="fas fa-bars"></i></button>
     <div id="home-container">
-      <div id="sidebar">
-        <h4>Contacts</h4>
-        <div class="contact">Contact 1</div>
-        <div class="contact">Contact 2</div>
-        <div class="contact" id="chat">Chat</div>
-        <button id="logoutButton">Logout</button>
-      </div>
-      <div id="main-content">
-        <h2>Users</h2>
-        <!-- User cards will be dynamically added here -->
-      </div>
+        <div id="sidebar">
+            <h4>Contacts</h4>
+            <div class="contact"><i class="fas fa-user"></i> Contact 1</div>
+            <div class="contact"><i class="fas fa-user"></i> Contact 2</div>
+            <button id="logoutButton">Logout</button>
+        </div>
+        <div id="main-content">
+            <h2>Friend List</h2>
+            <div id="friend-list">
+                <!-- Friend request cards will be dynamically added here -->
+            </div>
+            <hr class="styled-hr">
+            <h2>Friend Requests</h2>
+            <div id="friend-requests">
+                <!-- Friend request cards will be dynamically added here -->
+            </div>
+            <hr class="styled-hr">
+            <h2>Users</h2>
+            <div id="user-list">
+                <!-- User cards will be dynamically added here -->
+            </div>
+        </div>
     </div>
-  </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
 </html>

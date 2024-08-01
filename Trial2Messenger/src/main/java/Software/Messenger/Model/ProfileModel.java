@@ -42,11 +42,34 @@ public class ProfileModel {
 
 
     }
+// study topic
+    public List<Profile> getAllProfile(UserAccount userAccount) {
+        String currentUserId = userAccount.getProfile().getId().toString();
+        List<Profile> profiles = profileRepo.findAll();
+        System.out.println(currentUserId);
 
-    public List<Profile> getAllProfile(UserAccount userAccount){
-        List< Profile> profiles=profileRepo.findAll();
-        return profiles;
+        // Separate the current user's profile from the rest
+        List<Profile> updatedProfiles = profiles.stream()
+                .filter(profile -> !profile.getUserId().equals(currentUserId))
+                .collect(Collectors.toList());
+
+        Profile currentUserProfile = profiles.stream()
+                .filter(profile -> profile.getUserId().equals(currentUserId))
+                .findFirst()
+                .orElse(null);
+
+        // Clear the RequestList of each profile except the current user's profile
+        updatedProfiles.forEach(profile -> profile.getRequestList().clear());
+
+        // Add the current user's profile back to the list
+        if (currentUserProfile != null) {
+            updatedProfiles.add(currentUserProfile);
+        }
+
+        return updatedProfiles;
     }
+
+
     public void deleteProfile(Profile profile){
         profileRepo.delete(profile);
 
@@ -57,11 +80,18 @@ public class ProfileModel {
         return optionalProfile.orElse(null);
     }
 
-    public void requestadd(String sender,String receiver){
-        Profile receiverprofile=profileFinder(new ObjectId(receiver));
-        receiverprofile.getRequestList().add(sender);
-        profileRepo.save(receiverprofile);
+    public boolean requestadd(String sender, String receiver) {
+        Profile receiverProfile = profileFinder(new ObjectId(receiver));
+        if (!receiverProfile.getRequestList().contains(sender)&&!receiverProfile.getFriendList().contains(sender)) {
+            receiverProfile.getRequestList().add(sender);
+            System.out.println("trueee");
+            profileRepo.save(receiverProfile);
+            return true;
+        }else{
+            return false;
+        }
     }
+
 
 
 }

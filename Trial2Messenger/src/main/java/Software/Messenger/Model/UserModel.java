@@ -2,6 +2,7 @@ package Software.Messenger.Model;
 
 import Software.Messenger.Entity.UserAccount;
 import Software.Messenger.Repositry.UserAccountRepo;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class UserModel {
 
     public void delete(UserAccount user){
         AccountRepo.delete(user);
+    }
+    public UserAccount finduserAccount(ObjectId id){
+        return AccountRepo.findById(id).orElse(null);
+
     }
 
 
